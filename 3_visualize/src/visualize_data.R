@@ -1,34 +1,3 @@
-
-library(dplyr)
-library(readr)
-library(stringr)
-library(sbtools)
-library(whisker)
-
-project_output_dir <- 'my_dir'
-
-dir.create(project_output_dir)
-
-
-# Get the data from ScienceBase
-mendota_file <- file.path(project_output_dir, 'model_RMSEs.csv')
-item_file_download('5d925066e4b0c4f70d0d0599', names = 'me_RMSE.csv', destinations = mendota_file, overwrite_file = TRUE)
-
-
-# Prepare the data for plotting
-eval_data <- readr::read_csv(mendota_file, col_types = 'iccd') %>%
-  filter(str_detect(exper_id, 'similar_[0-9]+')) %>%
-  mutate(col = case_when(
-    model_type == 'pb' ~ '#1b9e77',
-    model_type == 'dl' ~'#d95f02',
-    model_type == 'pgdl' ~ '#7570b3'
-  ), pch = case_when(
-    model_type == 'pb' ~ 21,
-    model_type == 'dl' ~ 22,
-    model_type == 'pgdl' ~ 23
-  ), n_prof = as.numeric(str_extract(exper_id, '[0-9]+')))
-
-
 # Create a plot
 png(file = file.path(project_output_dir, 'figure_1.png'), width = 8, height = 10, res = 200, units = 'in')
 par(omi = c(0,0,0.05,0.05), mai = c(1,1,0,0), las = 1, mgp = c(2,.5,0), cex = 1.5)
@@ -72,10 +41,8 @@ text(2.3, 1.1, 'Process-Based', pos = 4, cex = 1.1)
 
 dev.off()
 
-
 # Save the processed data
 readr::write_csv(eval_data, file = file.path(project_output_dir, 'model_summary_results.csv'))
-
 
 # Save the model diagnostics
 render_data <- list(pgdl_980mean = filter(eval_data, model_type == 'pgdl', exper_id == "similar_980") %>% pull(rmse) %>% mean %>% round(2),
