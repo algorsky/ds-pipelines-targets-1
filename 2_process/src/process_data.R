@@ -1,7 +1,7 @@
 # Function to prepare the data for plotting
-add_colors_to_data <- function(fetch_data, col_types = "iccd") {
-  fetch_data %>% 
-    filter(str_detect(exper_id, 'similar_[0-9]+')) %>% 
+add_colors_to_data <- function(file_in, col_types = "iccd") {
+  readr::read_csv(file_in, col_types = col_types) %>%
+    filter(str_detect(exper_id, 'similar_[0-9]+')) %>%
     mutate(col = case_when(
       model_type == 'pb' ~ '#1b9e77',
       model_type == 'dl' ~'#d95f02',
@@ -12,3 +12,5 @@ add_colors_to_data <- function(fetch_data, col_types = "iccd") {
       model_type == 'pgdl' ~ 23
     ), n_prof = as.numeric(str_extract(exper_id, '[0-9]+')))
 }
+
+
