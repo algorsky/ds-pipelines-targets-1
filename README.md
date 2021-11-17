@@ -19,6 +19,8 @@ mendota_file<- fetch_data('1_fetch/out/model_RMSEs.csv', '5d925066e4b0c4f70d0d05
 source("2_process/src/process_data.R")
 #Add colors to data
 eval_data<- add_colors_to_data(file_in = mendota_file)
+# Save the processed data
+model_summary<- save_data(out_file = eval_data, project_directory = 2_process/out/, 'model_summary_results.csv')
 
 #Call visualize_data
 source("3_visualize/src/visualize_data.R")
