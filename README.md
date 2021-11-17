@@ -19,4 +19,10 @@ mendota_file<- fetch_data('1_fetch/out/model_RMSEs.csv', '5d925066e4b0c4f70d0d05
 source("2_process/src/process_data.R")
 #Add colors to data
 eval_data<- add_colors_to_data(file_in = mendota_file)
+
+#Call visualize_data
+source("3_process/src/visualize_data.R")
+#Plot data
+plot_results<- plot_data(file_name = '3_visualize/out/', eval_data = eval_data)
+
 ```
