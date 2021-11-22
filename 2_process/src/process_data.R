@@ -14,13 +14,13 @@ add_colors_to_data <- function(in_filepath, col_types = "iccd") {
 }
 
 # Save the processed data
-save_csv<- function(data_in, project_directory, file_name){
+save_csv<- function(data_in, project_directory, file_name, file_out){
   readr::write_csv(data_in, file = file.path(project_directory, file_name))
-  return(file_name) 
+  return(file_out) 
 }
 
 # Save the model diagnostics
-generate_model_diagnostics<- function(data_in, project_directory, file_name){
+generate_model_diagnostics<- function(data_in, project_directory, file_name, file_out){
   render_data <- list(pgdl_980mean = filter(data_in, model_type == 'pgdl', exper_id == "similar_980") %>% pull(rmse) %>% mean %>% round(2),
                       dl_980mean = filter(data_in, model_type == 'dl', exper_id == "similar_980") %>% pull(rmse) %>% mean %>% round(2),
                       pb_980mean = filter(data_in, model_type == 'pb', exper_id == "similar_980") %>% pull(rmse) %>% mean %>% round(2),
@@ -37,6 +37,6 @@ generate_model_diagnostics<- function(data_in, project_directory, file_name){
   The PGDL prediction accuracy was more robust compared to PB when only two profiles were provided for training ({{pgdl_2mean}} and {{pb_2mean}}°C, respectively). '
   
   whisker.render(template_1 %>% str_remove_all('\n') %>% str_replace_all('  ', ' '), render_data ) %>% cat(file = file.path(project_directory, file_name))
-  return(file_name) 
+  return(file_out) 
 }
 
