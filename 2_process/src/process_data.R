@@ -14,7 +14,7 @@ add_colors_to_data <- function(in_filepath, col_types = "iccd") {
 }
 
 # Save the processed data
-save_data<- function(data_in, project_directory, file_name){
+save_csv<- function(data_in, project_directory, file_name){
   readr::write_csv(data_in, file = file.path(project_directory, file_name))
 }
 

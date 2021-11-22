@@ -21,18 +21,18 @@ list(
   ),
   # Create a plot
   tar_target(
-    Temp_RMSEs_png,
-    plot_data(file_name = 'Temp_RMSEs.png', 
-              project_directory = "3_visualize/out/", 
+    figure_1_png,
+    plot_data(file_name = 'figure_1.png', 
+              project_directory = '3_visualize/out/', 
               eval_data = eval_data), 
     format = "file"
   ),
   # Save the processed data
   tar_target(
     model_summary_results_csv,
-    save_data(data_in = eval_data, 
+    save_csv(data_in = eval_data, 
               project_directory = '2_process/out/',
-              file_name = "model_summary_results.csv"), 
+              file_name = 'model_summary_results.csv'), 
     format = "file"
   ),
   # Save the model diagnostics

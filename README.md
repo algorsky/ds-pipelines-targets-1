@@ -23,7 +23,7 @@ source("2_process/src/process_data.R")
 eval_data<- add_colors_to_data(in_filepath = mendota_file)
 
 # Save the processed data
-save_data(data_in = eval_data, project_directory = '2_process/out/', file_name = 'model_summary_results.csv')
+save_csv(data_in = eval_data, project_directory = '2_process/out/', file_name = 'model_summary_results.csv')
 
 #Save model diagnostics
 save_model(data_in = eval_data, project_directory = '2_process/out/', file_name = 'model_diagnostic_text.txt')
