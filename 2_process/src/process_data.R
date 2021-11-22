@@ -1,6 +1,6 @@
 # Function to prepare the data for plotting
-add_colors_to_data <- function(file_in, col_types = "iccd") {
-  readr::read_csv(file_in, col_types = col_types) %>%
+add_colors_to_data <- function(in_filepath, col_types = "iccd") {
+  readr::read_csv(in_filepath, col_types = col_types) %>%
     filter(str_detect(exper_id, 'similar_[0-9]+')) %>%
     mutate(col = case_when(
       model_type == 'pb' ~ '#1b9e77',
@@ -19,7 +19,7 @@ save_data<- function(data_in, project_directory, file_name){
 }
 
 # Save the model diagnostics
-save_model<- function(data_in, project_directory, file_name){
+generate_model_diagnostics<- function(data_in, project_directory, file_name){
   render_data <- list(pgdl_980mean = filter(data_in, model_type == 'pgdl', exper_id == "similar_980") %>% pull(rmse) %>% mean %>% round(2),
                       dl_980mean = filter(data_in, model_type == 'dl', exper_id == "similar_980") %>% pull(rmse) %>% mean %>% round(2),
                       pb_980mean = filter(data_in, model_type == 'pb', exper_id == "similar_980") %>% pull(rmse) %>% mean %>% round(2),
