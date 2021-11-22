@@ -23,15 +23,15 @@ source("2_process/src/process_data.R")
 eval_data<- add_colors_to_data(file_in = mendota_file)
 
 # Save the processed data
-save_data(out_file = eval_data, project_directory = '2_process/out/', file_name = 'model_summary_results.csv')
+save_data(data_in = eval_data, project_directory = '2_process/out/', file_name = 'model_summary_results.csv')
 
 #Save model diagnostics
-save_model(file_in = eval_data, project_directory = '2_process/out/', file_name = 'model_diagnostic_text.txt')
+save_model(data_in = eval_data, project_directory = '2_process/out/', file_name = 'model_diagnostic_text.txt')
 
 # Call visualize_data
 source("3_visualize/src/visualize_data.R")
 
 #Plot data
-plot_results<- plot_data(file_name = '3_visualize/out/', eval_data = eval_data)
+plot_results<- plot_data(file_name = 'figure_1.png', project_directory = '3_visualize/out/', eval_data = eval_data)
 
 ```

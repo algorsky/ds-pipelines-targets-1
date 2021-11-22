@@ -14,21 +14,21 @@ add_colors_to_data <- function(file_in, col_types = "iccd") {
 }
 
 # Save the processed data
-save_data<- function(out_file, project_directory, file_name){
-  readr::write_csv(out_file, file = file.path(project_directory, file_name))
+save_data<- function(data_in, project_directory, file_name){
+  readr::write_csv(data_in, file = file.path(project_directory, file_name))
 }
 
 # Save the model diagnostics
-save_model<- function(file_in, project_directory, file_name){
-  render_data <- list(pgdl_980mean = filter(file_in, model_type == 'pgdl', exper_id == "similar_980") %>% pull(rmse) %>% mean %>% round(2),
-                      dl_980mean = filter(file_in, model_type == 'dl', exper_id == "similar_980") %>% pull(rmse) %>% mean %>% round(2),
-                      pb_980mean = filter(file_in, model_type == 'pb', exper_id == "similar_980") %>% pull(rmse) %>% mean %>% round(2),
-                      dl_500mean = filter(file_in, model_type == 'dl', exper_id == "similar_500") %>% pull(rmse) %>% mean %>% round(2),
-                      pb_500mean = filter(file_in, model_type == 'pb', exper_id == "similar_500") %>% pull(rmse) %>% mean %>% round(2),
-                      dl_100mean = filter(file_in, model_type == 'dl', exper_id == "similar_100") %>% pull(rmse) %>% mean %>% round(2),
-                      pb_100mean = filter(file_in, model_type == 'pb', exper_id == "similar_100") %>% pull(rmse) %>% mean %>% round(2),
-                      pgdl_2mean = filter(file_in, model_type == 'pgdl', exper_id == "similar_2") %>% pull(rmse) %>% mean %>% round(2),
-                      pb_2mean = filter(file_in, model_type == 'pb', exper_id == "similar_2") %>% pull(rmse) %>% mean %>% round(2))
+save_model<- function(data_in, project_directory, file_name){
+  render_data <- list(pgdl_980mean = filter(data_in, model_type == 'pgdl', exper_id == "similar_980") %>% pull(rmse) %>% mean %>% round(2),
+                      dl_980mean = filter(data_in, model_type == 'dl', exper_id == "similar_980") %>% pull(rmse) %>% mean %>% round(2),
+                      pb_980mean = filter(data_in, model_type == 'pb', exper_id == "similar_980") %>% pull(rmse) %>% mean %>% round(2),
+                      dl_500mean = filter(data_in, model_type == 'dl', exper_id == "similar_500") %>% pull(rmse) %>% mean %>% round(2),
+                      pb_500mean = filter(data_in, model_type == 'pb', exper_id == "similar_500") %>% pull(rmse) %>% mean %>% round(2),
+                      dl_100mean = filter(data_in, model_type == 'dl', exper_id == "similar_100") %>% pull(rmse) %>% mean %>% round(2),
+                      pb_100mean = filter(data_in, model_type == 'pb', exper_id == "similar_100") %>% pull(rmse) %>% mean %>% round(2),
+                      pgdl_2mean = filter(data_in, model_type == 'pgdl', exper_id == "similar_2") %>% pull(rmse) %>% mean %>% round(2),
+                      pb_2mean = filter(data_in, model_type == 'pb', exper_id == "similar_2") %>% pull(rmse) %>% mean %>% round(2))
   
   template_1 <- 'resulted in mean RMSEs (means calculated as average of RMSEs from the five dataset iterations) of {{pgdl_980mean}}, {{dl_980mean}}, and {{pb_980mean}}°C for the PGDL, DL, and PB models, respectively.
   The relative performance of DL vs PB depended on the amount of training data. The accuracy of Lake Mendota temperature predictions from the DL was better than PB when trained on 500 profiles 
