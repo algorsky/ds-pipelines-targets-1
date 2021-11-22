@@ -4,3 +4,4 @@
 .Ruserdata
 */out/*
 .Rproj
+*.DS_Store

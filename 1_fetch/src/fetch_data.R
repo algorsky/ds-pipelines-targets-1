@@ -1,16 +1,9 @@
-library(dplyr)
-library(readr)
-library(stringr)
-library(sbtools)
-library(whisker)
-
 # Function to get the data from ScienceBase
-fetch_data <- function(target_name, sb_id, sb_filename) {
-  
+fetch_data <- function(file_out, sb_id, sb_filename) {
   item_file_download(
     sb_id, 
     names = sb_filename, 
-    destinations = target_name, 
+    destinations = file_out, 
     overwrite_file = TRUE)
 }
 
