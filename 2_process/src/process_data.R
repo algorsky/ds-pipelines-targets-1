@@ -14,13 +14,13 @@ add_colors_to_data <- function(in_filepath, col_types = "iccd") {
 }
 
 # Save the processed data
-save_csv<- function(data_in, project_directory, file_name, file_out){
-  readr::write_csv(data_in, file = file.path(project_directory, file_name))
+save_csv<- function(data_in, file_out){
+  readr::write_csv(data_in, file = file.path(file_out))
   return(file_out) 
 }
 
 # Save the model diagnostics
-generate_model_diagnostics<- function(data_in, project_directory, file_name, file_out){
+generate_model_diagnostics<- function(data_in, file_out){
   render_data <- list(pgdl_980mean = filter(data_in, model_type == 'pgdl', exper_id == "similar_980") %>% pull(rmse) %>% mean %>% round(2),
                       dl_980mean = filter(data_in, model_type == 'dl', exper_id == "similar_980") %>% pull(rmse) %>% mean %>% round(2),
                       pb_980mean = filter(data_in, model_type == 'pb', exper_id == "similar_980") %>% pull(rmse) %>% mean %>% round(2),
@@ -36,7 +36,7 @@ generate_model_diagnostics<- function(data_in, project_directory, file_name, fil
   ({{dl_500mean}} and {{pb_500mean}}°C, respectively) or more, but worse than PB when training was reduced to 100 profiles ({{dl_100mean}} and {{pb_100mean}}°C respectively) or fewer.
   The PGDL prediction accuracy was more robust compared to PB when only two profiles were provided for training ({{pgdl_2mean}} and {{pb_2mean}}°C, respectively). '
   
-  whisker.render(template_1 %>% str_remove_all('\n') %>% str_replace_all('  ', ' '), render_data ) %>% cat(file = file.path(project_directory, file_name))
+  whisker.render(template_1 %>% str_remove_all('\n') %>% str_replace_all('  ', ' '), render_data ) %>% cat(file = file.path(file_out))
   return(file_out) 
 }
 
